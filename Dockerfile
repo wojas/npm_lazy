@@ -1,9 +1,12 @@
-#
-# Dockerfile for langrisha/npm-lazy
-#
-FROM node:0.12-onbuild
+FROM alpine
+MAINTAINER Konrad Wojas <git@m.wojas.nl>
 
-MAINTAINER Filip Dupanović <keybase.io/langrisha>
+RUN apk --no-cache add nodejs
+ADD package.json /app/package.json
+WORKDIR /app
+RUN npm install
+ADD lib /app/lib
+ADD index.js /app
 
 # Volumize the NPM package cache.
 VOLUME ["/root/.npm_lazy"]
